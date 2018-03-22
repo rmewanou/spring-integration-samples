@@ -1,20 +1,52 @@
 kafka:
-  topic: si.topic
-  newTopic: si.new.topic
-  messageKey: si.key
+  topicIn: content.stream.int
+  topicOut: contentStreamNew
+#  messageKey: si.key
+
 spring:
   kafka:
+# Bootstrap servers for both producers/consumers
+#    bootstrap-servers: "cs-dsp-kafka-dev-a.test.lodgingshared.expedia.com:19092,cs-dsp-kafka-dev-b.test.lodgingshared.expedia.com:29092,cs-dsp-kafka-dev-b.test.lodgingshared.expedia.com:39092"
     consumer:
-      group-id: siTestGroup
+      group-id: consumerTestGroup
       auto-offset-reset: earliest
       enable-auto-commit: false
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      bootstrap-servers: cs-confluent-platform-kafka.test.expedia.com:80
+      max-poll-records: 2
+
     producer:
       batch-size: 16384
       buffer-memory: 33554432
       retries: 0
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+#      bootstrap-servers: "cs-dsp-kafka-dev-a.test.lodgingshared.expedia.com:19092,cs-dsp-kafka-dev-b.test.lodgingshared.expedia.com:29092,cs-dsp-kafka-dev-b.test.lodgingshared.expedia.com:39092"
+      properties:
+        security.protocol: SSL
+      bootstrap-servers:
+              - cs-dsp-kafka-dev-a.test.lodgingshared.expedia.com:1401
+              - cs-dsp-kafka-dev-b.test.lodgingshared.expedia.com:1402
+              - cs-dsp-kafka-dev-b.test.lodgingshared.expedia.com:1403
+              - cs-dsp-kafka-dev-c.test.lodgingshared.expedia.com:1404
+      ssl:
+        keystore-location: ./client.keystore.jks
+        keystore-password: test1234
+        key-password: test1234
+        truststore-location: ./client.truststore.jks
+        truststore-password: test1234
 
-
+    admin:
+      properties:
+#        bootstrap.servers: ${spring.kafka.producer.bootstrap-servers}
+        bootstrap.servers: "cs-dsp-kafka-dev-a.test.lodgingshared.expedia.com:19094"
+        security.protocol: SSL
+      ssl:
+        keystore-location: ./client.keystore.jks
+        keystore-password: test1234
+        key-password: test1234
+        truststore-location: ./client.truststore.jks
+        truststore-password: test1234
+    listener:
+      concurrency: 1

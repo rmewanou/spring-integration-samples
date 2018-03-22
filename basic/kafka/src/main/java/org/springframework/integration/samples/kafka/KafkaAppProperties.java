@@ -28,26 +28,26 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("kafka")
 public class KafkaAppProperties {
 
-	private String topic;
+	private String topicIn;
 
-	private String newTopic;
+	private String topicOut;
 
 	private String messageKey;
 
-	public String getTopic() {
-		return this.topic;
+	public String getTopicIn() {
+		return this.topicIn;
 	}
 
-	public void setTopic(String topic) {
-		this.topic = topic;
+	public void setTopicIn(String topicIn) {
+		this.topicIn = topicIn;
 	}
 
-	public String getNewTopic() {
-		return this.newTopic;
+	public String getTopicOut() {
+		return this.topicOut;
 	}
 
-	public void setNewTopic(String newTopic) {
-		this.newTopic = newTopic;
+	public void setTopicOut(String topicOut) {
+		this.topicOut = topicOut;
 	}
 
 	public String getMessageKey() {

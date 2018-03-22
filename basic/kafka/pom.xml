@@ -10,6 +10,7 @@
   <artifactId>kafka</artifactId>
   <version>5.0.0.BUILD-SNAPSHOT</version>
   <name>Apache Kafka Sample</name>
+  <packaging>jar</packaging>
   <description>Apache Kafka Sample</description>
   <url>http://projects.spring.io/spring-integration</url>
   <organization>
@@ -119,6 +120,13 @@
         </exclusion>
       </exclusions>
     </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.20</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -186,23 +194,26 @@
       </exclusions>
     </dependency>
   </dependencies>
-  <repositories>
-    <repository>
-      <id>repo.spring.io.milestone</id>
-      <name>Spring Framework Maven Milestone Repository</name>
-      <url>https://repo.spring.io/libs-milestone</url>
-    </repository>
-    <repository>
-      <id>repo.spring.io.snapshot</id>
-      <name>Spring Framework Maven Snapshot Repository</name>
-      <url>https://repo.spring.io/libs-snapshot</url>
-    </repository>
-  </repositories>
+  <!--<repositories>-->
+    <!--<repository>-->
+      <!--<id>repo.spring.io.milestone</id>-->
+      <!--<name>Spring Framework Maven Milestone Repository</name>-->
+      <!--<url>https://repo.spring.io/libs-milestone</url>-->
+    <!--</repository>-->
+    <!--<repository>-->
+      <!--<id>repo.spring.io.snapshot</id>-->
+      <!--<name>Spring Framework Maven Snapshot Repository</name>-->
+      <!--<url>https://repo.spring.io/libs-snapshot</url>-->
+    <!--</repository>-->
+  <!--</repositories>-->
   <build>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <jvmArguments>-Xms1024m -Xmx1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=./heap.dump</jvmArguments>
+        </configuration>
       </plugin>
     </plugins>
   </build>
